@@ -1,0 +1,81 @@
+diff --git a/RootLayout.tsx b/app/_layout.tsx
+similarity index 100%
+rename from RootLayout.tsx
+rename to app/_layout.tsx
+index e69de29..d0f5a3b 100644
+--- a/RootLayout.tsx
++++ b/app/_layout.tsx
+@@ -1,6 +1,6 @@
+-import { useEffect } from 'react';
++import { useEffect } from 'react';
+ import { Stack } from 'expo-router';
+ import { StatusBar } from 'expo-status-bar';
+ import { useFrameworkReady } from '@/hooks/useFrameworkReady';
+@@
+-SplashScreen.preventAutoHideAsync();
++SplashScreen.preventAutoHideAsync();
+@@
+-      <Stack screenOptions={{ headerShown: false }}>
+-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+-        <Stack.Screen name="+not-found" />
+-      </Stack>
++      <Stack screenOptions={{ headerShown: false }}>
++        <Stack.Screen name="index" options={{ headerShown: false }} />
++        <Stack.Screen name="+not-found" />
++      </Stack>
+diff --git a/HomeScreen.tsx b/app/index.tsx
+similarity index 100%
+rename from HomeScreen.tsx
+rename to app/index.tsx
+index e69de29..a3f4d2c 100644
+--- a/HomeScreen.tsx
++++ b/app/index.tsx
+@@ -1,4 +1,4 @@
+-import React from 'react';
++import React from 'react';
+ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+ // ...rest of imports and component
+diff --git a/webpack.config.js b/webpack.config.js
+index e69de29..c5f4b12 100644
+--- a/webpack.config.js
++++ b/webpack.config.js
+@@ -0,0 +1,22 @@
++const { createExpoWebpackConfigAsync } = require('@expo/webpack-config');
++const HtmlWebpackPlugin = require('html-webpack-plugin');
++
++module.exports = async function(env, argv) {
++  const config = await createExpoWebpackConfigAsync(env, argv);
++  // Emit an ES module bundle so import.meta is legal
++  config.output.module = true;
++  config.experiments = { ...(config.experiments || {}), outputModule: true };
++  // Inject <script type="module">
++  config.plugins = config.plugins.map(plugin => {
++    if (plugin instanceof HtmlWebpackPlugin) {
++      plugin.userOptions.scriptLoading = 'module';
++    }
++    return plugin;
++  });
++  return config;
++};
+
+diff --git a/app/+not-found.tsx b/app/+not-found.tsx
+new file mode 100644
+index 0000000..a7c3f27
+--- /dev/null
++++ b/app/+not-found.tsx
+@@ -0,0 +1,16 @@
++import React from 'react';
++import { View, Text, StyleSheet } from 'react-native';
++
++export default function NotFound() {
++  return (
++    <View style={styles.container}>
++      <Text style={styles.text}>404 - Page Not Found</Text>
++    </View>
++  );
++}
++
++const styles = StyleSheet.create({
++  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
++  text: { fontSize: 18, fontWeight: 'bold' },
++});
