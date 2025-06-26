@@ -5,6 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = async function(env, argv) {
   const config = await createExpoWebpackConfigAsync(env, argv);
 
+  /* 👇  add this line – any non-eval devtool works */
+  config.devtool = 'cheap-module-source-map';
+
   // 1) Emit an ESM bundle so import.meta is legal:
   config.output.module = true;
   config.experiments = { ...(config.experiments || {}), outputModule: true };
