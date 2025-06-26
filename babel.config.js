@@ -3,8 +3,7 @@ module.exports = function (api) {
     return {
       presets: ['babel-preset-expo'],
       plugins: [
-        //  ⬇️  add this line
-        'babel-plugin-transform-import-meta',
+        // Removed babel-plugin-transform-import-meta to fix import.meta syntax error
       ],
     };
-  };  
+  };
