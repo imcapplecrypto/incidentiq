@@ -13,7 +13,7 @@
     },
     "web": {
       "bundler": "webpack",
-      "devServerPort": 8081,
+      "devServerPort": 3000,
       "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
